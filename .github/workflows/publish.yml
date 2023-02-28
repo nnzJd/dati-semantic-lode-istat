@@ -3,11 +3,11 @@ name: Docker Image CI
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths-ignore:
       - '*.md'
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths-ignore:
       - '*.md'
 
@@ -89,7 +89,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            maintainer=Team Digitale
+            maintainer=Istat
             org.opencontainers.image.source.branch=${{ steps.extract_branch.outputs.branch }}
           tags: |
             type=raw,value={{date 'YYYYMMDD'}}-${{github.run_number}}-{{sha}}
@@ -122,7 +122,7 @@ jobs:
           echo "imageName=${IMAGE}:${TAG}" >> $GITHUB_OUTPUT
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
-          owner: teamdigitale
+          owner: istat
           repo: dati-semantic-kubernetes
           github_token: ${{ secrets.DATI_SEMANTIC_KUBERNETES_DEPLOY }}
           workflow_file_name: update-config.yaml
